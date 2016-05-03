@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/java"
+
+  config.vm.provider "virtualbox" do |vb|
+      vb.memory = "4096"
+  end
+  #map path to root of project.
+  config.vm.synced_folder "../..", "/vagrant"
+
+  #install essential libraries.
+  config.vm.provision "shell", path: "../scripts/install_cassandra.sh"
+  config.vm.provision "shell", path: "../scripts/install_spark.sh"
+  config.vm.provision "shell", path: "../scripts/install_anaconda.sh"
+end
