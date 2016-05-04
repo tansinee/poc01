@@ -1,6 +1,8 @@
 #!/bin/bash
 JUPYTER_PORT=8888
 
+`which jupyter` || conda install jupyter
+
 # Disable firewall and allow port
 sudo ufw Disable
 sudo iptables -A INPUT -p tcp --dport $JUPYTER_PORT -j ACCEPT
