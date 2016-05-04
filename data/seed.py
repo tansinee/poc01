@@ -1,5 +1,6 @@
-from datetime import datetime, timedelta
+import os
 import random
+from datetime import datetime, timedelta
 from itertools import chain
 
 latest_prices = {}
@@ -32,7 +33,8 @@ def gen_period(start, stop):
 from cassandra.cluster import Cluster
 from cassandra.query import BatchStatement
 
-cluster = Cluster(['10.0.2.15'])
+host = os.getenv("CASSANDRA_HOST", '10.0.2.15')
+cluster = Cluster([host])
 session = cluster.connect('stock')
 
 create_tx_stmt = session.prepare(
