@@ -60,6 +60,8 @@ def write_to_cassandra(transactions):
 
 
 for i in range(1, 31):
+    if datetime(2016, 4, i).weekday() >= 5:
+        continue
     print('Generating for day: ',i)
     txns = gen_period(datetime(2016, 4, i, 9, 30), datetime(2016, 4, i, 16, 30))
     write_to_cassandra(txns)
