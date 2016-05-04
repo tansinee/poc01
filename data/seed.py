@@ -6,7 +6,7 @@ latest_prices = {}
 
 def gen(at):
     tx_amount = random.randrange(20, 100, 1)
-    for i in xrange(0, tx_amount):
+    for i in range(0, tx_amount):
         symbol = chr(random.randrange(65, 65 + 17, 1)) + \
                  chr(random.randrange(65, 65 + 17, 1)) + \
                  chr(random.randrange(65, 65 + 17, 1))
@@ -35,16 +35,16 @@ def random_30_days():
     return txns
 
 
-from cassandara.cluster import Cluster
+from cassandra.cluster import Cluster
 
-cluster = Cluster(['localhost'])
+cluster = Cluster(['10.0.2.15'])
 session = cluster.connect('stock')
 
 create_tx_stmt = session.prepare(
-    'INSERT INTO transactions (symbol, tx_time, price) VALUES ?, ?, ?'
+    'INSERT INTO transactions (symbol, tx_time, price) VALUES (?, ?, ?)'
 )
 
 for item in random_30_days():
-    session.execute(create_tx_stmt, item[0], item[2], item[1])
+    session.execute(create_tx_stmt, (item[0], item[2], item[1]))
 
 cluster.shutdown()
