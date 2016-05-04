@@ -25,20 +25,26 @@ def gen_period(start, stop):
         for x in range(0, int((stop - start).total_seconds()))
     ])
 
-def run():
-    dt = datetime.now()
-    dt = dt - timedelta(microseconds=dt.microsecond)
-
-    txns = gen(dt)
-    for item in txns:
-        print item
-
-def run_30_days():
+def random_30_days():
     txns = chain.from_iterable([
         gen_period(datetime(2016, 4, day, 9, 30), datetime(2016, 4, day, 16, 30))
         for day in range(1, 31)
         if datetime(2016, 4, day).weekday() < 5
     ])
 
-    for item in txns:
-        print item
+    return txns
+
+
+from cassandara.cluster import Cluster
+
+cluster = Cluster(['localhost'])
+session = cluster.connect('stock')
+
+create_tx_stmt = session.prepare(
+    'INSERT INTO transactions (symbol, tx_time, price) VALUES ?, ?, ?'
+)
+
+for item in random_30_days():
+    session.execute(create_tx_stmt, item[0], item[2], item[1])
+
+cluster.shutdown()
