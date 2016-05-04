@@ -1,2 +1,6 @@
 .vagrant
 *.pyc
+
+# Jupyter related files
+metastore_db
+.ipynb_checkpoints
