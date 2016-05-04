@@ -5,17 +5,19 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/java"
 
   config.vm.provider "virtualbox" do |vb|
-      vb.memory = "4096"
-      vb.cpus = 4
+    vb.memory = 4096
+    vb.cpus = 4
   end
   #map path to root of project.
   config.vm.synced_folder "../..", "/vagrant"
 
-  #install essential libraries.
+  # Install essential libraries.
   config.vm.provision "shell", path: "../scripts/install_cassandra.sh"
   config.vm.provision "shell", path: "../scripts/install_spark.sh"
   config.vm.provision "shell", path: "../scripts/install_anaconda.sh"
 
-  #map port for cassandra
+  # forwarded port for cassandra
   config.vm.network "forwarded_port", host: 19042, guest: 9042
+  # forwarded port for ipython notebook
+  config.vm.network "forwarded_port", host: 8888, guest: 8888
 end
