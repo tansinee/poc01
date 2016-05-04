@@ -16,5 +16,5 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", path: "../scripts/install_anaconda.sh"
 
   #map port for cassandra
-  config.vm.network "forwarded_port", guest: 19042, host: 9042
+  config.vm.network "forwarded_port", host: 19042, guest: 9042
 end
