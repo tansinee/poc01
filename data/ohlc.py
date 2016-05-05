@@ -24,4 +24,6 @@ daily_ohlc = data.select('symbol', to_date(data.tx_time).alias('batch_time'), 'p
                     F.last(data.price).alias('close')
                  )
 
-daily_ohlc.show()
+daily_ohlc.write.format('org.apache.spark.sql.cassandra') \
+            .options(table='ohlc_1_day', keyspace='stock', cluster='Test Cluster') \
+            .save()
