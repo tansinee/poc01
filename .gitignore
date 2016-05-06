@@ -1,5 +1,7 @@
 .vagrant
+# Python
 *.pyc
+__pycache__
 
 # Jupyter related files
 metastore_db
