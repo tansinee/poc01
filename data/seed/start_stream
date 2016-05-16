@@ -1,0 +1,3 @@
+#!/bin/bash
+python -u stream.py | tee tmp.out | nc -lk 9999 &
+tail -f tmp.out

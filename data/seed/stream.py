@@ -15,7 +15,8 @@ while(True):
         print('{0},{1},{2}'.format(
                 item[0],
                 item[1],
-                datetime.strftime(item[2], '%Y-%m-%d %H:%M:%S.%f')
+                datetime.strftime(item[2], '%Y-%m-%d %H:%M:%S.') + str(int(item[2].microsecond / 1000))
+                #datetime.strftime(item[2], '%Y-%m-%d %H:%M:%S.%f') #comment above and uncomment if wanna work with python
         ))
 
     time_to_sleep = 1 - (datetime.now() - t1).total_seconds()
