@@ -2,7 +2,6 @@ from datetime import datetime
 
 from pyspark import SparkConf, SparkContext
 from pyspark.streaming import StreamingContext
-from pyspark_cassandra import streaming
 from pyspark.sql import functions as F
 from pyspark.sql import Row, SQLContext
 from pyspark.sql.types import TimestampType
@@ -64,7 +63,6 @@ def reduce_to_ohlc(time, rdd):
                              'left'
                            )
 
-
     merged_ohlc = merged_ohlc.select(
         ohlc.symbol.alias('symbol'),
         ohlc.batch_time.alias('batch_time'),
@@ -75,8 +73,6 @@ def reduce_to_ohlc(time, rdd):
         F.when(existing_ohlc.low < ohlc.low, existing_ohlc.low).otherwise(ohlc.low).alias('low'),
         F.when(existing_ohlc.high > ohlc.high, existing_ohlc.high).otherwise(ohlc.high).alias('high')
     )
-
-    merged_ohlc.show()
     merged_ohlc.write.format('org.apache.spark.sql.cassandra') \
                 .options(table='ohlc_1_min2', keyspace='stock', cluster='Test Cluster') \
                 .mode('append') \
