@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mkdir -p /tmp/spark-events
+spark-submit --class "StreamOhlc" target/scala-2.11/stream-ohlc_2.11-0.1.jar
