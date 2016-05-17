@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+sbt package
+
+mkdir -p /tmp/spark-events
+spark-submit --class "StreamingOhlc" \
+  --packages datastax:spark-cassandra-connector:1.5.0-s_2.10 \
+  target/scala-2.10/stream-ohlc_2.10-0.1.jar
