@@ -16,6 +16,7 @@ derby.log
 #custom temp file
 *.out
 tmp/
+_checkpoints/
 
 target/
 
