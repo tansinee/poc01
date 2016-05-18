@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cqlsh <<EOF
+copy stock.ohlc_1_min2 to './tmp/ohlc_1_min.csv' with header=true;
+copy stock.transactions2 to './tmp/transactions.csv' with header=true;
+quit
+EOF
