@@ -14,7 +14,8 @@ derby.log
 .DS_Store
 
 #custom temp file
-tmp.out
+*.out
+tmp/
 
 target/
 
